@@ -1,0 +1,12 @@
+.custom-button{
+    background-color: #CC0000;
+    color: #ffff;
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 10em;
+    transition: background-color 0.3s ease;
+    background-color: #aa0000;
+    box-shadow: 0 0 20px rgba(204, 0, 0, 0.5);
+}
