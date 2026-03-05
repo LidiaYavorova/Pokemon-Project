@@ -5,3 +5,8 @@
     align-items: center;
     justify-content: center;
 }
+
+.pokemon-cards{
+    display:flex;
+    gap: 2rem;
+}

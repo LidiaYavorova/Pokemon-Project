@@ -7,15 +7,21 @@ import "./Battle.styles.css";
 
 export default function Battle() {
   const [pokemon, setPokemon] = useState<Pokemon | null>(null);
+  const [previousPokemon, setPreviousPokemon] = useState<Pokemon | null>(null);
 
   const generatePokemon = () => {
-    getRandomPokemon().then((pokemon) => {
-      setPokemon(pokemon);
+    getRandomPokemon().then((newPokemon) => {
+      setPreviousPokemon(pokemon);
+      setPokemon(newPokemon);
     });
   };
   return (
     <section className="battle-container">
-      <PokemonCard pokemon={pokemon} />
+      <h1>PokéDuel</h1>
+      <div className="pokemon-cards">
+        <PokemonCard pokemon={previousPokemon} label="Previous" />
+        <PokemonCard pokemon={pokemon} label="Current" />
+      </div>
       <Button onClick={generatePokemon}>Generate Pokémon</Button>
     </section>
   );

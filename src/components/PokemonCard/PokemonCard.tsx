@@ -4,11 +4,15 @@ import "./PokemonCard.styles.css";
 
 interface PokemonCardProps {
   pokemon: Pokemon | null;
+  label: string;
 }
 
-export default function PokemonCard({ pokemon }: PokemonCardProps) {
+export default function PokemonCard({ pokemon, label }: PokemonCardProps) {
+  const colorClass = label === "Previous" ? "#3B5BA7" : "#CC0000";
+
   return (
     <div className="pokemon-card">
+      <h3 style={{ color: colorClass }}>{label}</h3>
       {pokemon ? (
         <>
           <h2 className="pokemon-name">{pokemon.name}</h2>
