@@ -1,0 +1,11 @@
+.stat-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background-color: #f0f0f0;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #333;
+}

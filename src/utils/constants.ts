@@ -18,3 +18,5 @@ export const TYPE_COLORS: Record<string, string> = {
   steel: "#B8B8D0",
   fairy: "#EE99AC",
 };
+
+export const BASE_URL = "https://pokeapi.co/api/v2";
