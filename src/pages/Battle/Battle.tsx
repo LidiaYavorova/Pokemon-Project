@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import PokemonCard from "../../components/PokemonCard/PokemonCard";
 import Button from "../../components/ui/Button/Button";
 import { getRandomPokemon } from "../../services/pokemon.service";
@@ -24,6 +24,8 @@ export default function Battle() {
   const [typeMatches, setTypeMatches] = useState(0);
   const [newWins, setNewWins] = useState(0);
   const [previousWins, setPreviousWins] = useState(0);
+
+  const [pokemonsCounter, setPokemonsCounter] = useState(0);
 
   const winner = useMemo(() => {
     if (
@@ -74,7 +76,7 @@ export default function Battle() {
     }
   }, [previousPokemon]);
 
-  const generatePokemon = () => {
+  const generatePokemon = useCallback(() => {
     if (currentPokemon && previousPokemon) {
       if (isTypeMatch) {
         setTypeMatches((prev) => prev + 1);
@@ -85,11 +87,12 @@ export default function Battle() {
         setPreviousWins((prev) => prev + 1);
       }
     }
+    setPokemonsCounter((prev) => prev + 1);
     getRandomPokemon().then((newPokemon) => {
       setPreviousPokemon(currentPokemon);
       setCurrentPokemon(newPokemon);
     });
-  };
+  }, [currentPokemon, previousPokemon, winner, isTypeMatch]);
 
   return (
     <section className="battle-container">
@@ -108,6 +111,7 @@ export default function Battle() {
         <WinnerBanner winner={winner} isTypeMatch={isTypeMatch} />
       )}
       <Button onClick={generatePokemon}>Generate Pokémon</Button>
+      <p>Pokémon #{pokemonsCounter} loaded.</p>
     </section>
   );
 }
