@@ -27,5 +27,9 @@ export const comparePokemons = async (
     currentAdvantages.includes(t.type.name),
   );
 
-  return { newWins, currentWins };
+  const newTypes = newPokemon?.types.map((t) => t.type.name) || [];
+  const currentTypes = currentPokemon?.types.map((t) => t.type.name) || [];
+  const isTypeMatch = newTypes.some((t) => currentTypes.includes(t));
+
+  return { newWins, currentWins, isTypeMatch };
 };

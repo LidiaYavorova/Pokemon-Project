@@ -20,3 +20,9 @@ export const TYPE_COLORS: Record<string, string> = {
 };
 
 export const BASE_URL = "https://pokeapi.co/api/v2";
+
+export const WINNER = {
+  NEW: "New Pokemon wins",
+  PREVIOUS: "Previous Pokemon wins",
+  NONE: "No Advantage",
+} as const;
