@@ -1,12 +1,12 @@
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import PokemonCard from "../../components/PokemonCard/PokemonCard";
 import Button from "../../components/ui/Button/Button";
 import { getRandomPokemon } from "../../services/pokemon.service";
 import type { Pokemon } from "../../types/Pokemon";
 import "./Battle.styles.css";
-import { getTypeAdvantage } from "../../services/types.service";
 import StatBadge from "../../components/ui/StatBadge/StatBadge";
 import WinnerBanner from "../../components/WinnerBanner/WinnerBanner";
+import { comparePokemons, getBaseStatTotal } from "../../utils/helpers";
 
 export default function Battle() {
   const [currentPokemon, setCurrentPokemon] = useState<Pokemon | null>(null);
@@ -22,40 +22,15 @@ export default function Battle() {
     null,
   );
 
-  const getBaseStatTotal = (pokemon: Pokemon) =>
-    pokemon.stats.reduce((total, s) => total + s.base_stat, 0);
-
-  const comparePokemons = async (
-    newPokemon: Pokemon,
-    currentPokemon: Pokemon,
-  ) => {
-    const newAdvantages = (
-      await Promise.all(
-        newPokemon.types.map((t) => getTypeAdvantage(t.type.name)),
-      )
-    ).flat();
-
-    const currentAdvantages = (
-      await Promise.all(
-        currentPokemon.types.map((t) => getTypeAdvantage(t.type.name)),
-      )
-    ).flat();
-
-    const newWins = newPokemon.types.some((t) =>
-      newAdvantages.includes(t.type.name),
-    );
-    const currentWins = currentPokemon.types.some((t) =>
-      currentAdvantages.includes(t.type.name),
-    );
-
-    return { newWins, currentWins };
-  };
+  const strongestStatTotal = useMemo(() => {
+    return strongestPokemon ? getBaseStatTotal(strongestPokemon) : 0;
+  }, [strongestPokemon]);
 
   const generatePokemon = useCallback(async () => {
     const newPokemon = await getRandomPokemon();
     setPokemonsCounter((prev) => prev + 1);
 
-    if (newPokemon && currentPokemon && strongestPokemon) {
+    if (newPokemon && currentPokemon && strongestStatTotal !== 0) {
       const { newWins, currentWins } = await comparePokemons(
         newPokemon,
         currentPokemon,
@@ -78,7 +53,7 @@ export default function Battle() {
         setWinner("No Advantage");
       }
 
-      if (getBaseStatTotal(newPokemon) > getBaseStatTotal(strongestPokemon)) {
+      if (getBaseStatTotal(newPokemon) > strongestStatTotal) {
         setStrongestPokemon(newPokemon);
       }
     } else if (newPokemon) {
@@ -87,7 +62,7 @@ export default function Battle() {
 
     setPreviousPokemon(currentPokemon);
     setCurrentPokemon(newPokemon);
-  }, [currentPokemon, strongestPokemon]);
+  }, [currentPokemon, strongestStatTotal]);
 
   return (
     <>
