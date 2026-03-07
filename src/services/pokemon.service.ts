@@ -1,4 +1,4 @@
-import type { Pokemon, PokemonType } from "../types/Pokemon";
+import type { Pokemon, PokemonStat, PokemonType } from "../types/Pokemon";
 import { BASE_URL } from "../utils/constants";
 
 interface PokemonApiResponse {
@@ -9,6 +9,7 @@ interface PokemonApiResponse {
     front_default: string;
   };
   types: PokemonType[];
+  stats: PokemonStat[];
 }
 
 export const getRandomPokemon = async (): Promise<Pokemon | null> => {
@@ -25,6 +26,7 @@ export const getRandomPokemon = async (): Promise<Pokemon | null> => {
       height: data.height,
       weight: data.weight,
       types: data.types,
+      stats: data.stats,
     };
   } catch (error) {
     console.error(error);
