@@ -1,5 +1,5 @@
 import { TYPE_COLORS } from "../../../utils/constants";
-import "./TypeBadge.styles.css";
+import "./TypeBadge.css";
 
 interface TypeBadgeProps {
   type: string;

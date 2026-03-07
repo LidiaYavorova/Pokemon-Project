@@ -1,6 +1,6 @@
 import type { Pokemon } from "../../types/Pokemon";
 import TypeBadge from "../ui/TypeBadge/TypeBadge";
-import "./PokemonCard.styles.css";
+import "./PokemonCard.css";
 
 interface PokemonCardProps {
   pokemon: Pokemon | null;

@@ -1,4 +1,4 @@
-import "./WinnerBanner.styles.css";
+import "./WinnerBanner.css";
 
 interface WinnerBannerProps {
   winner: string;

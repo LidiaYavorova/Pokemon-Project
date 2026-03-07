@@ -3,7 +3,7 @@ import PokemonCard from "../../components/PokemonCard/PokemonCard";
 import Button from "../../components/ui/Button/Button";
 import { getRandomPokemon } from "../../services/pokemon.service";
 import type { Pokemon } from "../../types/Pokemon";
-import "./Battle.styles.css";
+import "./Battle.css";
 import StatBadge from "../../components/ui/StatBadge/StatBadge";
 import WinnerBanner from "../../components/WinnerBanner/WinnerBanner";
 import { comparePokemons, getBaseStatTotal } from "../../utils/helpers";

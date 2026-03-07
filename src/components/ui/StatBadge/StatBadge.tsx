@@ -1,4 +1,4 @@
-import "./StatBadge.styles.css";
+import "./StatBadge.css";
 
 interface StatBadgeProps {
   label: string;

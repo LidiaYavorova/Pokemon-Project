@@ -1,4 +1,4 @@
-import "./Button.styles.css";
+import "./Button.css";
 export default function Button({
   onClick,
   children,
