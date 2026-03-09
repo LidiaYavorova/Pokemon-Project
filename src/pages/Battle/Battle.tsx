@@ -6,9 +6,12 @@ import type { Pokemon } from "../../types/Pokemon";
 import "./Battle.css";
 import StatBadge from "../../components/ui/StatBadge/StatBadge";
 import WinnerBanner from "../../components/WinnerBanner/WinnerBanner";
-import { comparePokemons, getBaseStatTotal } from "../../utils/helpers";
 import { WINNER } from "../../utils/constants";
 import type { BattleResult, BattleStats } from "../../types/Battle";
+import {
+  comparePokemons,
+  getBaseStatTotal,
+} from "../../services/battle.service";
 
 export default function Battle() {
   const [currentPokemon, setCurrentPokemon] = useState<Pokemon | null>(null);

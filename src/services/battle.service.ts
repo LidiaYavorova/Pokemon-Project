@@ -15,6 +15,7 @@ export const comparePokemons = async (
   if (isTypeMatch) {
     return { newWins: false, currentWins: false, isTypeMatch: true };
   }
+
   const newAdvantages = (
     await Promise.all(
       newPokemon.types.map((t) => getTypeAdvantage(t.type.name)),
