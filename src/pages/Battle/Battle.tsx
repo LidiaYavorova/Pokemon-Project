@@ -21,6 +21,7 @@ export default function Battle() {
   );
   const [pokemonsCounter, setPokemonsCounter] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const [battleStats, setBattleStats] = useState<BattleStats>({
     typeMatches: 0,
@@ -39,44 +40,52 @@ export default function Battle() {
 
   const generatePokemon = useCallback(async () => {
     setIsLoading(true);
-    const newPokemon = await getRandomPokemon();
+    setError(null);
 
-    if (!newPokemon) {
-      setIsLoading(false);
-      return;
-    }
-    setIsLoading(false);
-    setPokemonsCounter((prev) => prev + 1);
+    try {
+      const newPokemon = await getRandomPokemon();
+      setPokemonsCounter((prev) => prev + 1);
 
-    if (newPokemon && currentPokemon && strongestPokemon) {
-      const { newWins, currentWins, isTypeMatch } = await comparePokemons(
-        newPokemon,
-        currentPokemon,
-      );
-      setBattleResult({
-        winner: newWins
-          ? WINNER.NEW
-          : currentWins
-            ? WINNER.PREVIOUS
-            : WINNER.NONE,
-        isTypeMatch,
-      });
+      if (newPokemon && currentPokemon && strongestPokemon) {
+        const { newWins, currentWins, isTypeMatch } = await comparePokemons(
+          newPokemon,
+          currentPokemon,
+        );
 
-      setBattleStats((prev) => ({
-        typeMatches: isTypeMatch ? prev.typeMatches + 1 : prev.typeMatches,
-        newWins: newWins ? prev.newWins + 1 : prev.newWins,
-        previousWins: currentWins ? prev.previousWins + 1 : prev.previousWins,
-      }));
+        setBattleResult({
+          winner: newWins
+            ? WINNER.NEW
+            : currentWins
+              ? WINNER.PREVIOUS
+              : WINNER.NONE,
+          isTypeMatch,
+        });
 
-      if (getBaseStatTotal(newPokemon) > strongestStatTotal) {
+        setBattleStats((prev) => ({
+          typeMatches: isTypeMatch ? prev.typeMatches + 1 : prev.typeMatches,
+          newWins: newWins ? prev.newWins + 1 : prev.newWins,
+          previousWins: currentWins ? prev.previousWins + 1 : prev.previousWins,
+        }));
+
+        if (getBaseStatTotal(newPokemon) > strongestStatTotal) {
+          setStrongestPokemon(newPokemon);
+        }
+      } else if (newPokemon) {
         setStrongestPokemon(newPokemon);
       }
-    } else if (newPokemon) {
-      setStrongestPokemon(newPokemon);
-    }
 
-    setPreviousPokemon(currentPokemon);
-    setCurrentPokemon(newPokemon);
+      setPreviousPokemon(currentPokemon);
+      setCurrentPokemon(newPokemon);
+    } catch (err) {
+      const message =
+        err instanceof Error
+          ? err.message
+          : "Something went wrong. Please try again.";
+      setError(message);
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
   }, [currentPokemon, strongestStatTotal, strongestPokemon]);
 
   return (
@@ -100,8 +109,9 @@ export default function Battle() {
           />
         )}
         <Button onClick={generatePokemon} disabled={isLoading}>
-          {isLoading ? "Loading Pokémon" : "Generate Pokémon"}
+          {isLoading ? "Loading Pokémon..." : "Generate Pokémon"}
         </Button>
+        {error && <p className="error-message">{error}</p>}
         <p>Pokémon #{pokemonsCounter} loaded.</p>
       </div>
       <div className="strongest-card">

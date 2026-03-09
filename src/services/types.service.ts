@@ -17,6 +17,6 @@ export const getTypeAdvantage = async (type: string) => {
     );
   } catch (error) {
     console.error(error);
-    return [];
+    throw new Error("Failed to load Pokémon types. Please try again.");
   }
 };

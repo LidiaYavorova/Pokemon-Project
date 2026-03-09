@@ -12,7 +12,7 @@ interface PokemonApiResponse {
   stats: PokemonStat[];
 }
 
-export const getRandomPokemon = async (): Promise<Pokemon | null> => {
+export const getRandomPokemon = async (): Promise<Pokemon> => {
   const randomID = Math.floor(Math.random() * 1025) + 1;
   try {
     const response = await fetch(`${BASE_URL}/pokemon/${randomID}`);
@@ -30,6 +30,6 @@ export const getRandomPokemon = async (): Promise<Pokemon | null> => {
     };
   } catch (error) {
     console.error(error);
-    return null;
+    throw new Error("Failed to load Pokémon. Please try again.");
   }
 };
