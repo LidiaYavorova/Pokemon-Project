@@ -27,10 +27,10 @@ export const comparePokemons = async (
     )
   ).flat();
 
-  const newWins = newPokemon.types.some((t) =>
+  const newWins = currentPokemon.types.some((t) =>
     newAdvantages.includes(t.type.name),
   );
-  const currentWins = currentPokemon.types.some((t) =>
+  const currentWins = newPokemon.types.some((t) =>
     currentAdvantages.includes(t.type.name),
   );
 
