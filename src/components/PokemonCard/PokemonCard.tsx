@@ -1,4 +1,5 @@
 import type { Pokemon } from "../../types/Pokemon";
+import { LABEL_COLORS } from "../../utils/constants";
 import TypeBadge from "../ui/TypeBadge/TypeBadge";
 import "./PokemonCard.css";
 
@@ -8,11 +9,10 @@ interface PokemonCardProps {
 }
 
 export default function PokemonCard({ pokemon, label }: PokemonCardProps) {
-  const colorClass = label === "Previous" ? "#3B5BA7" : "#CC0000";
-
+  const labelColor = LABEL_COLORS[label] ?? "#777";
   return (
     <div className="pokemon-card">
-      <h3 style={{ color: colorClass }}>{label}</h3>
+      <h3 style={{ color: labelColor }}>{label}</h3>
       {pokemon ? (
         <>
           <h2 className="pokemon-name">{pokemon.name}</h2>

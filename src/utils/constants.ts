@@ -19,10 +19,16 @@ export const TYPE_COLORS: Record<string, string> = {
   fairy: "#EE99AC",
 };
 
-export const BASE_URL = "https://pokeapi.co/api/v2";
+export const BASE_URL = "https://pokeapi.co/api/v2" as const;
 
 export const WINNER = {
   NEW: "New Pokemon wins",
   PREVIOUS: "Previous Pokemon wins",
   NONE: "No Advantage",
 } as const;
+
+export const LABEL_COLORS: Record<string, string> = {
+  Previous: "#3B5BA7",
+  Current: "#CC0000",
+  Strongest: "#F0A500",
+};
