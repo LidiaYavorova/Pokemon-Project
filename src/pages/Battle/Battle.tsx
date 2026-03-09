@@ -20,6 +20,7 @@ export default function Battle() {
     null,
   );
   const [pokemonsCounter, setPokemonsCounter] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [battleStats, setBattleStats] = useState<BattleStats>({
     typeMatches: 0,
@@ -37,7 +38,14 @@ export default function Battle() {
   }, [strongestPokemon]);
 
   const generatePokemon = useCallback(async () => {
+    setIsLoading(true);
     const newPokemon = await getRandomPokemon();
+
+    if (!newPokemon) {
+      setIsLoading(false);
+      return;
+    }
+    setIsLoading(false);
     setPokemonsCounter((prev) => prev + 1);
 
     if (newPokemon && currentPokemon && strongestPokemon) {
@@ -91,7 +99,9 @@ export default function Battle() {
             isTypeMatch={battleResult.isTypeMatch}
           />
         )}
-        <Button onClick={generatePokemon}>Generate Pokémon</Button>
+        <Button onClick={generatePokemon} disabled={isLoading}>
+          {isLoading ? "Loading Pokémon" : "Generate Pokémon"}
+        </Button>
         <p>Pokémon #{pokemonsCounter} loaded.</p>
       </div>
       <div className="strongest-card">
