@@ -69,33 +69,31 @@ export default function Battle() {
   }, [currentPokemon, strongestStatTotal, strongestPokemon]);
 
   return (
-    <>
-      <section className="container">
-        <div className="battle-content">
-          <h1>PokéDuel</h1>
-          <div className="stats-row">
-            <StatBadge label="Type Matches" count={battleStats.typeMatches} />
-            <StatBadge label="New Wins" count={battleStats.newWins} />
-            <StatBadge label="Prev Wins" count={battleStats.previousWins} />
-          </div>
-          <div className="pokemon-cards">
-            <PokemonCard pokemon={previousPokemon} label="Previous" />
-            <div className="vs-circle">VS</div>
-            <PokemonCard pokemon={currentPokemon} label="Current" />
-          </div>
-          {currentPokemon && previousPokemon && (
-            <WinnerBanner
-              winner={battleResult.winner}
-              isTypeMatch={battleResult.isTypeMatch}
-            />
-          )}
-          <Button onClick={generatePokemon}>Generate Pokémon</Button>
-          <p>Pokémon #{pokemonsCounter} loaded.</p>
+    <section className="container">
+      <div className="battle-content">
+        <h1>PokéDuel</h1>
+        <div className="stats-row">
+          <StatBadge label="Type Matches" count={battleStats.typeMatches} />
+          <StatBadge label="New Wins" count={battleStats.newWins} />
+          <StatBadge label="Prev Wins" count={battleStats.previousWins} />
         </div>
-        <div className="strongest-card">
-          <PokemonCard pokemon={strongestPokemon} label="Strongest" />
+        <div className="pokemon-cards">
+          <PokemonCard pokemon={previousPokemon} label="Previous" />
+          <div className="vs-circle">VS</div>
+          <PokemonCard pokemon={currentPokemon} label="Current" />
         </div>
-      </section>
-    </>
+        {currentPokemon && previousPokemon && (
+          <WinnerBanner
+            winner={battleResult.winner}
+            isTypeMatch={battleResult.isTypeMatch}
+          />
+        )}
+        <Button onClick={generatePokemon}>Generate Pokémon</Button>
+        <p>Pokémon #{pokemonsCounter} loaded.</p>
+      </div>
+      <div className="strongest-card">
+        <PokemonCard pokemon={strongestPokemon} label="Strongest" />
+      </div>
+    </section>
   );
 }
