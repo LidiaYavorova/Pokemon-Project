@@ -8,6 +8,13 @@ export const comparePokemons = async (
   newPokemon: Pokemon,
   currentPokemon: Pokemon,
 ) => {
+  const newTypes = newPokemon?.types.map((t) => t.type.name) || [];
+  const currentTypes = currentPokemon?.types.map((t) => t.type.name) || [];
+  const isTypeMatch = newTypes.some((t) => currentTypes.includes(t));
+
+  if (isTypeMatch) {
+    return { newWins: false, currentWins: false, isTypeMatch: true };
+  }
   const newAdvantages = (
     await Promise.all(
       newPokemon.types.map((t) => getTypeAdvantage(t.type.name)),
@@ -26,10 +33,6 @@ export const comparePokemons = async (
   const currentWins = currentPokemon.types.some((t) =>
     currentAdvantages.includes(t.type.name),
   );
-
-  const newTypes = newPokemon?.types.map((t) => t.type.name) || [];
-  const currentTypes = currentPokemon?.types.map((t) => t.type.name) || [];
-  const isTypeMatch = newTypes.some((t) => currentTypes.includes(t));
 
   return { newWins, currentWins, isTypeMatch };
 };
