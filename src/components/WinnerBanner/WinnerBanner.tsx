@@ -1,3 +1,4 @@
+import { WINNER } from "../../utils/constants";
 import "./WinnerBanner.css";
 
 interface WinnerBannerProps {
@@ -12,11 +13,10 @@ export default function WinnerBanner({
   if (isTypeMatch) {
     return <div className="winner-banner type-match">TYPE MATCH!</div>;
   }
-
   const className = `winner-banner ${
-    winner === "New Pokemon wins"
+    winner === WINNER.NEW
       ? "new-wins"
-      : winner === "Previous Pokemon wins"
+      : winner === WINNER.PREVIOUS
         ? "prev-wins"
         : "no-advantage"
   }`;
