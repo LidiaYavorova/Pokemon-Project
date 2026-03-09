@@ -1,5 +1,6 @@
+import { memo } from "react";
 import "./Button.css";
-export default function Button({
+const Button = memo(function Button({
   onClick,
   children,
 }: {
@@ -11,4 +12,6 @@ export default function Button({
       {children}
     </button>
   );
-}
+});
+
+export default Button;
