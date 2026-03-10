@@ -31,7 +31,7 @@ export default function PokemonCard({ pokemon, label }: PokemonCardProps) {
         </>
       ) : (
         <>
-          <img src="src/assets/images/pokeball.png" alt="Pokeball" />
+          <img src="public/assets/images/pokeball.png" alt="Pokeball" />
           <h2>No Pokémon yet</h2>
         </>
       )}
